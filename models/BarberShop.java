@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class BarberShop {
@@ -10,6 +11,9 @@ public class BarberShop {
      */
     private final int numSeats;
 
+    /**
+     * Quantity of seats number available.
+     */
     private int numSeatsAvailable;
     /**
      * List of customers who are sitting in the store.
@@ -70,6 +74,9 @@ public class BarberShop {
         return true;
     }
 
+    /**
+     * @return Return quantity of seats available.
+     */
     public synchronized int getSeatsAvailable() {
         notifyAll();
         return this.numSeatsAvailable;
@@ -135,11 +142,6 @@ public class BarberShop {
         return customersInShop.size() == 0;
     }
 
-
-    /**
-     * @return Returns true if there are seats available.
-     */
-
     public ArrayList<Customer> getListCustomersExit() {
         return listCustomerExit;
     }
@@ -147,6 +149,8 @@ public class BarberShop {
     public ArrayList<Customer> getListCustomers() {
         return listCustomers;
     }
+
+
 
 }
 

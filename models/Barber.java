@@ -26,7 +26,7 @@ public class Barber extends Thread {
     public void run() {
         while(true) {
             Customer customer = shop.getNextCustomer();
-            shavingCustomer(customer.getIdCustomer());
+            shavingCustomer(customer);
             shop.finishHaircut(customer);
         }
     }
@@ -34,11 +34,12 @@ public class Barber extends Thread {
     /**
      * @param customer Customer that the barber will cut the hair.
      */
-    private void shavingCustomer(int customer) {
+    private void shavingCustomer(Customer customer) {
         try {
             long timeShaving = (long) (Math.random() * (timeMaxShaving) + 3);
             sleep(TimeUnit.SECONDS.toMillis(timeShaving));
-            System.out.println("CUSTOMER: " + this.getNameBarber()+ "     Shaving time: " + timeShaving +"  for customer: " + customer);
+            customer.setTimeShaving((int) timeShaving);
+            System.out.println("CUSTOMER: " + this.getNameBarber() + "     Shaving time: " + timeShaving + "  for customer: " + customer.getIdCustomer());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

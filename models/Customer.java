@@ -1,7 +1,5 @@
 package models;
 
-import java.util.concurrent.TimeUnit;
-
 public class Customer extends Thread implements Comparable<Customer> {
 
     /**
@@ -27,12 +25,14 @@ public class Customer extends Thread implements Comparable<Customer> {
      * Specifies the status if the customer was served or not.
      */
     private boolean state = false;
+    private int timeShaving;
 
     public Customer(int id, String name, int priority, BarberShop shop) {
         this.id = id;
         this.priority = priority;
         this.name = name;
         this.shop = shop;
+        this.timeShaving = 0;
     }
 
     public void run() {
@@ -91,4 +91,15 @@ public class Customer extends Thread implements Comparable<Customer> {
         return Integer.compare(this.getPriorityCustomer(), customer.getPriorityCustomer());
     }
 
+    public int getTimeShaving() {
+        return this.timeShaving;
+    }
+
+    public void setTimeShaving(int timeShaving) {
+        this.timeShaving = timeShaving;
+    }
+
+    public Object[] getData() {
+        return (new Object[]{this.getIdCustomer(), this.getNameCustomer(), this.getPriorityCustomer(), this.getTimeShaving()});
+    }
 }
