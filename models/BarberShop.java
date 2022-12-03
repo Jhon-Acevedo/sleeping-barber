@@ -15,6 +15,7 @@ public class BarberShop {
      * Quantity of seats number available.
      */
     private int numSeatsAvailable;
+
     /**
      * List of customers who are sitting in the store.
      */
@@ -27,6 +28,8 @@ public class BarberShop {
      * List of customers who left the store.
      */
     private final ArrayList<Customer> listCustomerExit;
+
+    private int occupiedSeats;
     private boolean done = false;
 
     /**
@@ -38,6 +41,7 @@ public class BarberShop {
         this.listCustomerExit = new ArrayList<>();
         this.customersInShop = new PriorityQueue<>();
         this.numSeatsAvailable = numSeats;
+        this.occupiedSeats = 0;
     }
 
     /**
@@ -83,6 +87,14 @@ public class BarberShop {
     }
 
     /**
+     * @return Return number of seats occupied.
+     */
+    public synchronized int getOccupiedSeats() {
+        notifyAll();
+        return occupiedSeats;
+    }
+
+    /**
      * @param customer Customer who is in the store.
      * @return Returns true if the number of chairs is equal to the number of users that are in the store.
      * @desciption In case the number of chairs in the store is equal to the number of chairs, the customer who entered leaves the store and is added to the list of exit users. Conversely, if the user can sit in a chair, the customer is added to the list of waiting users.
@@ -95,6 +107,7 @@ public class BarberShop {
         }
         customersInShop.add(customer);
         this.numSeatsAvailable = numSeats - customersInShop.size();
+        this.occupiedSeats = customersInShop.size();
         return false;
     }
 
@@ -151,6 +164,18 @@ public class BarberShop {
     }
 
 
+
+
+
+    // Info: IDCustomer, NameCustomer, Priority, TimeShaving.
+    public Object[][] takeInfoCustomer(List<Customer> customer) {
+        Object[][] matrix = new Object[customer.size()][];
+        int c = matrix.length;
+        for (int i = 0; i < c; i++) {
+            matrix[i] = customer.get(i).getData();
+        }
+        return matrix;
+    }
 
 }
 
